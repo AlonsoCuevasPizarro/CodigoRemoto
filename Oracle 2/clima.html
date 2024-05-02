@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estaciones Meteorológicas</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+</head>
+
+<body>
+    <h1>Estaciones Meteorológicas</h1>
+    <input type="text" id="filtro-estaciones" placeholder="Buscar estación...">
+    <table id="tabla-estaciones">
+        <thead>
+            <tr>
+                <th>Nombre Estación</th>
+                <th>Temperatura (°C)</th>
+                <th>Humedad Relativa (%)</th>
+                <th>Presión (hPa)</th>
+                <!-- Agregar más columnas según los datos -->
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Aquí se cargarán los datos de las estaciones -->
+            <?php
+            foreach ($estaciones as $estacion) {
+                foreach ($estacion['datos'] as $dato) {
+                    echo "<tr>";
+                    echo "<td>" . $estacion['estacion']['nombreEstacion'] . "</td>";
+                    echo "<td>" . $dato['temperatura'] . "</td>";
+                    echo "<td>" . $dato['humedadRelativa'] . "</td>";
+                    echo "<td>" . $dato['presionEstacion'] . "</td>";
+                    // Agregar más columnas según los datos
+                    echo "</tr>";
+                }
+            }
+            ?>
+        </tbody>
+    </table>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Inicializar DataTables y aplicar filtros
+            var tabla = $('#tabla-estaciones').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json"
+                }
+            });
+
+            $('#filtro-estaciones').keyup(function () {
+                tabla.search($(this).val()).draw();
+            });
+        });
+    </script>
+</body>
+
+</html>
